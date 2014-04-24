@@ -362,6 +362,65 @@
         rawString = "      hello world      ";
         console.log("\nrawString: " + rawString + ", trimmedString: " + rawString.trim());
 
+        /**
+         * Check if the String is empty
+         *
+         * "hello world".isEmpty() // false;
+         * "".isEmpty() // true;
+         * "   ".isEmpty() // true
+         * "''".isEmpty() // false
+         *
+         * @return  {Boolean}
+         */
+        String.method("isEmpty", function () {
+            return this === "" || this.trim() === "";
+        });
+
+        console.log('\n"".isEmpty(): ' + "".isEmpty());
+        console.log('"   ".isEmpty(): ' + "   ".isEmpty());
+        console.log('"  hello world  ".isEmpty(): ' + "  hello world  ".isEmpty());
+
+        /**
+         * Check if the String contains traces of common HTML/XML tags
+         *
+         * "Hello World".containsTags() // false
+         * "Hello <strong>World</strong>".containsTags() // true
+         * "Hello <span class='earth'>World</span>".containsTags() // true
+         * 'Hello "> World'.containsTags() // true
+         * "Hello &lt;p&gt;World&lt;&#47;p&gt;".containsTags() // true
+         *
+         * @return  {Boolean}
+         */
+        String.method("containsTags", function () {
+            var searchTags = [
+                    "</",
+                    '/>',
+                    '">',
+                    "<span",
+                    "<p",
+                    "<br"
+                ],
+                searchTagCount = searchTags.length;
+            return function containsTags() {
+                var i, value, tag;
+                if (!this.isEmpty()) {
+                    value = this.decodeEntities().toLowerCase();
+                    for (i = 0; i < searchTagCount; i += 1) {
+                        tag = searchTags[i];
+                        if (value.indexOf(tag) !== -1) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            };
+        }());
+
+        console.log('\n"Hello World".containsTags(): ' + "Hello World".containsTags());
+        console.log('"Hello &lt;p&gt;World&lt;&#47;p&gt;".containsTags(): ' + "Hello &lt;p&gt;World&lt;&#47;p&gt;".containsTags());
+        console.log('"Hello <span class=\"earth\">World</span>".containsTags(): ' + "Hello <span class=\"earth\">World</span>".containsTags());
+        console.log('"Hello \"> World".containsTags(): ' + "Hello \"> World".containsTags());
+
     }());
 
 })();
