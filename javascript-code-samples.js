@@ -107,4 +107,106 @@
 
     }());
 
+    /**
+     * Example: Some custom Number utility methods added to the Number prototype
+     */
+
+    (function () {
+
+        var inputNumber, constrainedNumber, randomBoolean;
+
+        /**
+         * Constrains a Number to within a range
+         *
+         * var inputNumber = 13;
+         * var constrainedNumber = inputNumber.constrainToRange(0, 6);
+         *
+         * @param   {Number}    min     The minimum range Number
+         * @param   {Number}    max     The maximum range Number
+         *
+         * @return  {Number}    The constrained Number
+         */
+        Number.method("constrainToRange", function () {
+            return function constrainToRange(min, max) {
+                try {
+                    if (typeof min !== "number" || typeof max !== "number") {
+                        throw {
+                            name: "TypeError",
+                            message: "constrainToRange(...) requires Number args"
+                        };
+                    }
+
+                    if (this >= min) {
+                        return (this <= max) ? this.valueOf() : max;
+                    }
+                    return min;
+                } catch (e) {
+                    console.log(e.name + ": " + e.message);
+                }
+            };
+        }());
+
+        inputNumber = 13;
+        constrainedNumber = inputNumber.constrainToRange(0, 6);
+
+        console.log("\ninputNumber: " + inputNumber + ", inputNumber.constrainedNumber(0, 6): " + constrainedNumber);
+        console.log("typeof constrainedNumber: " + typeof constrainedNumber);
+
+        Number.method("integer", function () {
+            return Math[this < 0 ? "ceil" : "floor"](this);
+        });
+
+        console.log("\n(-9 / 2).integer(): " + (-9 / 2).integer());
+
+        /**
+         * Returns a random Number within a range
+         *
+         * var randomNumber = Number().randomWithinRange(0, 10)
+         * var randomBoolean = !!Number().randomWithinRange(0, 1);
+         *
+         * @param   {Number}    min             The minimum range Number
+         * @param   {Number}    max             The maximum range Number
+         * @param   {Boolean}   [round=true]    Round the return value.
+         *
+         * @return  {Number}    The random Number
+         */
+        Number.method("randomWithinRange", function () {
+            return function randomWithinRange(min, max, round) {
+                try {
+                    if (typeof min !== "number" || typeof max !== "number") {
+                        throw {
+                            name: "TypeError",
+                            message: "randomWithinRange(...) requires Number args"
+                        };
+                    }
+
+                    if (max < min) {
+                        throw {
+                            name: "TypeError",
+                            message: "randomWithinRange(...) max should not be less than min"
+                        };
+                    }
+
+                    if (max === min) {
+                        return max;
+                    }
+
+                    round = (round === undefined) ? true : !!round;
+
+                    var value = Math.random() * (max - min) + min;
+                    return round ? Math.round(value) : value;
+
+                } catch (e) {
+                    console.log(e.name + ": " + e.message);
+                }
+            };
+        }());
+
+        console.log("\nNumber().randomWithinRange(0, 10): " + Number().randomWithinRange(0, 10));
+
+        randomBoolean = !!Number().randomWithinRange(0, 1);
+        console.log("randomBoolean = !!Number().randomWithinRange(0, 1): " + randomBoolean);
+
+    }());
+
 })();
