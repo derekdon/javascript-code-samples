@@ -347,6 +347,21 @@
         rawString = "&lt;&#64;&#123;Hello&amp;&#47;World&#125;&#163;&#92;&lt;&gt;";
         console.log("\nrawString: " + rawString + ", decodedString: " + rawString.decodeEntities());
 
+        /**
+         * Trim whitespace
+         *
+         * var raw = "      hello world      ";
+         * var trimmed = raw.trim(); // "hello world"
+         *
+         * @return  {String}    The trimmed String
+         */
+        String.method("trim", function () {
+            return this.replace(/^\s+|\s+$/g, "");
+        });
+
+        rawString = "      hello world      ";
+        console.log("\nrawString: " + rawString + ", trimmedString: " + rawString.trim());
+
     }());
 
 })();
