@@ -423,4 +423,50 @@
 
     }());
 
+    /**
+     * Example: A custom Array utility method added to the Array prototype
+     */
+
+    (function () {
+
+        var someArray = [
+            {data: 1},
+            {data: 2},
+            {data: 3},
+            {data: 4},
+            {data: 5}
+        ];
+
+        /**
+         * Return an out of bounds index as if it wraps the Array length
+         *
+         * var someArray = [{data:0}, {data:1}, {data:2}, {data:3}, {data:4}];
+         * var wrappedNegative = someArray.wrappedIndex(-3); // 2
+         * var wrappedPositive = someArray.wrappedIndex(6); // 1
+         *
+         * @param   {Number}    index   Index to wrap
+         *
+         * @return  {Number}    The wrapped index
+         */
+        Array.method("wrappedIndex", function () {
+            return function wrappedIndex(index) {
+                try {
+                    if (typeof index !== "number") {
+                        throw {
+                            name: "TypeError",
+                            message: "wrappedIndex(...) requires a Number arg"
+                        };
+                    }
+
+                    return (index % this.length + this.length) % this.length;
+                } catch (e) {
+                    console.log(e.name + ": " + e.message);
+                }
+            };
+        }());
+
+        console.log("\nsomeArray.length: " + someArray.length + ", someArray.wrappedIndex(6): " + someArray.wrappedIndex(6));
+
+    }());
+
 })();
