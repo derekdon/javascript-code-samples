@@ -209,4 +209,144 @@
 
     }());
 
+    /**
+     * Example: Some custom String utility methods added to the String prototype
+     */
+
+    (function () {
+
+        var rawString;
+
+        /**
+         * Returns an encoded String
+         *
+         * var raw = "<@{Hello&/World}£\\<>";
+         * var encoded = raw.encodeEntities(); // "&lt;&#64;&#123;Hello&amp;&#47;World&#125;&#163;&#92;&lt;&gt;"
+         *
+         * @return  {String}    The encoded String
+         */
+        String.method("encodeEntities", function () {
+            return function encodeEntities() {
+                var regExp, value = this;
+                regExp = /&/gi;
+                value = value.replace(regExp, "&amp;");
+                regExp = /</gi;
+                value = value.replace(regExp, "&lt;");
+                regExp = />/gi;
+                value = value.replace(regExp, "&gt;");
+                regExp = /\(/gi;
+                value = value.replace(regExp, "&#40;");
+                regExp = /\)/gi;
+                value = value.replace(regExp, "&#41;");
+                regExp = /\[/gi;
+                value = value.replace(regExp, "&#91;");
+                regExp = /\]/gi;
+                value = value.replace(regExp, "&#93;");
+                regExp = /\{/gi;
+                value = value.replace(regExp, "&#123;");
+                regExp = /\}/gi;
+                value = value.replace(regExp, "&#125;");
+                regExp = /"/gi;
+                value = value.replace(regExp, "&quot;");
+                regExp = /“/gi;
+                value = value.replace(regExp, "&#8220;");
+                regExp = /”/gi;
+                value = value.replace(regExp, "&#8221;");
+                regExp = /'/gi;
+                value = value.replace(regExp, "&apos;");
+                regExp = /‘/gi;
+                value = value.replace(regExp, "&#8216;");
+                regExp = /’/gi;
+                value = value.replace(regExp, "&#8217;");
+                regExp = /\//gi;
+                value = value.replace(regExp, "&#47;");
+                regExp = /\\/gi;
+                value = value.replace(regExp, "&#92;");
+                regExp = /£/gi;
+                value = value.replace(regExp, "&#163;");
+                regExp = /€/gi;
+                value = value.replace(regExp, "&#8364;");
+                regExp = /©/gi;
+                value = value.replace(regExp, "&#169;");
+                regExp = /®/gi;
+                value = value.replace(regExp, "&#174;");
+                regExp = /™/gi;
+                value = value.replace(regExp, "&#8482;");
+                regExp = /@/gi;
+                value = value.replace(regExp, "&#64;");
+                return value;
+            };
+        }());
+
+        rawString = "<@{Hello&/World}£\\<>";
+        console.log("\nrawString: " + rawString + ", encodedString: " + rawString.encodeEntities());
+
+        /**
+         * Returns a decoded String, matches against entity code, number and name
+         *
+         * var raw = "&lt;&#64;&#123;Hello&amp;&#47;World&#125;&#163;&#92;&lt;&gt;";
+         * var decoded = raw.decodeEntities(); // "<@{Hello&/World}£\\<>"
+         *
+         * @return  {String}    The decoded String
+         */
+        String.method("decodeEntities", function () {
+            return function decodeEntities() {
+                var regExp, value = this;
+                regExp = /(%26|&#38;|&amp;)/gi;
+                value = value.replace(regExp, "&");
+                regExp = /(%A0|&#160;|&nbsp;)/gi;
+                value = value.replace(regExp, " ");
+                regExp = /(%3C|&#60;|&lt;)/gi;
+                value = value.replace(regExp, "<");
+                regExp = /(%3E|&#62;|&gt;)/gi;
+                value = value.replace(regExp, ">");
+                regExp = /(%28|&#40;)/gi;
+                value = value.replace(regExp, "(");
+                regExp = /(%29|&#41;)/gi;
+                value = value.replace(regExp, ")");
+                regExp = /(%5B|&#91;)/gi;
+                value = value.replace(regExp, "[");
+                regExp = /(%5D|&#93;)/gi;
+                value = value.replace(regExp, "]");
+                regExp = /(%7B|&#123;)/gi;
+                value = value.replace(regExp, "{");
+                regExp = /(%7D|&#125;)/gi;
+                value = value.replace(regExp, "}");
+                regExp = /(%22|&#34;|&quot;)/gi;
+                value = value.replace(regExp, "\"");
+                regExp = /(%93|&#8220;|&ldquo;)/gi;
+                value = value.replace(regExp, "“");
+                regExp = /(%94|&#8221;|&rdquo;)/gi;
+                value = value.replace(regExp, "”");
+                regExp = /(%27|&#39;|&apos;)/gi;
+                value = value.replace(regExp, "'");
+                regExp = /(%91|&#8216;|&lsquo;)/gi;
+                value = value.replace(regExp, "‘");
+                regExp = /(%92|&#8217;|&rsquo;)/gi;
+                value = value.replace(regExp, "’");
+                regExp = /(%2F|&#47;|&frasl;)/gi;
+                value = value.replace(regExp, "/");
+                regExp = /(%5C|&#92;)/gi;
+                value = value.replace(regExp, "\\");
+                regExp = /(%A3|&#163;|&pound;)/gi;
+                value = value.replace(regExp, "£");
+                regExp = /(%80|&#8364;|&euro;)/gi;
+                value = value.replace(regExp, "€");
+                regExp = /(%A9|&#169;|&copy;)/gi;
+                value = value.replace(regExp, "©");
+                regExp = /(%AE|&#174;|&reg;)/gi;
+                value = value.replace(regExp, "®");
+                regExp = /(%99|&#8482;|&#153;|&trade;)/gi;
+                value = value.replace(regExp, "™");
+                regExp = /(%40|&#64;)/gi;
+                value = value.replace(regExp, "@");
+                return value;
+            };
+        }());
+
+        rawString = "&lt;&#64;&#123;Hello&amp;&#47;World&#125;&#163;&#92;&lt;&gt;";
+        console.log("\nrawString: " + rawString + ", decodedString: " + rawString.decodeEntities());
+
+    }());
+
 })();
