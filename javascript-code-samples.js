@@ -55,7 +55,7 @@
             that.getEmail = function () {
                 return spec.email || "";
             };
-            that.getGender = function () {
+            that.isMale = function () {
                 return spec.male;
             };
             that.toString = function () {
@@ -78,7 +78,7 @@
                 return that.getTitle() + superGetName() + " " + spec.lastName;
             };
             that.getTitle = function () {
-                return that.getGender() ? "Mr. " : "Miss. ";
+                return that.isMale() ? "Mr. " : "Miss. ";
             };
             that.getCompany = function () {
                 return spec.company || "";
