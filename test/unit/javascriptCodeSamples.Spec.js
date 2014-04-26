@@ -67,13 +67,13 @@ describe("String utilities", function () {
 
     describe("encodeEntities", function () {
         it("string encodes correctly", function () {
-            expect(decodedString.encodeEntities()).toBe(encodedString);
+            expect(decodedString.encodeEntities()).toEqual(encodedString);
         });
     });
 
     describe("decodeEntities", function () {
         it("string decodes correctly", function () {
-            expect(encodedString.decodeEntities()).toBe(decodedString);
+            expect(encodedString.decodeEntities()).toEqual(decodedString);
         });
     });
 
@@ -81,7 +81,7 @@ describe("String utilities", function () {
         var fatString = "           Hello World             ",
             trimString = "Hello World";
         it("string trimmed correctly", function () {
-            expect(fatString.trim()).toBe(trimString);
+            expect(fatString.trim()).toEqual(trimString);
         });
     });
 
