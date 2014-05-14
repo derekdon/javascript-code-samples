@@ -1,4 +1,4 @@
-# Javascript code samples
+# Javascript code samples (Native)
 
 This repo has been created solely for the purpose of review by companies with dev roles requiring elements of javascript,
 as much of my code is not in the public domain. All of the JS sample code is in the one file
